@@ -1,4 +1,4 @@
-package sigleThread;
+package singleThread;
 
 import multiThreads.Block;
 

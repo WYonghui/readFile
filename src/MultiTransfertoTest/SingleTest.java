@@ -8,7 +8,7 @@ import java.nio.channels.SocketChannel;
 /**
  * Created by wang on 17-10-20.
  */
-public class SignalTest {
+public class SingleTest {
 
     private static int length = 1024*1024*10;   //10MB
 
