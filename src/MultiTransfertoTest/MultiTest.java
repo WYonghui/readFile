@@ -19,9 +19,14 @@ public class MultiTest {
         String path;
         if (args.length > 0)
             path = args[0];
-        else
+        else {
             path = "/root/wang/projects/hiberfil.sys";
 //            path = "/home/wang/IdeaProjects/projects/intellij2.pdf";
+        }
+
+        if (args.length >= 2){  //从参数列表中读取并行度
+            loaderNum = Integer.parseInt(args[1]);
+        }
 
         File file = new File(path);
 

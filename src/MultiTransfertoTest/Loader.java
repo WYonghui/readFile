@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.InetSocketAddress;
 import java.nio.channels.FileChannel;
 import java.nio.channels.SocketChannel;
 
@@ -18,7 +17,8 @@ public class Loader implements Runnable{
 
     public Loader(File file, SocketChannel dst)
     {
-        this.file = file;
+//        this.file = file;
+        this.file = new File(file.getAbsolutePath());
         this.dst = dst;
     }
 
@@ -38,8 +38,8 @@ public class Loader implements Runnable{
 //            socketChannel.connect(new InetSocketAddress("localhost", 8899));
 
             long count = MultiTest.length;
-//            long position = 0 + threadNum*count;
-            long position = 0 + 2 * count;
+            long position = 0 + threadNum*count;
+            System.out.println("threadNum: " + threadNum);
 //            long size = 0;
 
             while (true){
@@ -52,7 +52,8 @@ public class Loader implements Runnable{
                 }
 
 //                size += n;
-                position += count * MultiTest.loaderNum;
+//                position += count * MultiTest.loaderNum;
+                position += count * 2;
 
             }
 
