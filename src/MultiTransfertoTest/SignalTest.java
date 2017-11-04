@@ -25,7 +25,7 @@ public class SignalTest {
             FileInputStream inputStream = new FileInputStream(new File(path));
             FileChannel fileChannel = inputStream.getChannel();
 
-//            Thread thread = new Thread(new SignalClient());
+//            Thread thread = new Thread(new SingleClient());
 //            thread.start();
 
             SocketChannel out = SocketChannel.open();

@@ -7,7 +7,7 @@ import java.nio.channels.SocketChannel;
 /**
  * Created by wang on 17-10-20.
  */
-public class SignalClient implements Runnable{
+public class SingleClient implements Runnable{
 
     public static void main(String[] args) {
         try {
