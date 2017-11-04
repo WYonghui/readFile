@@ -12,7 +12,7 @@ import java.nio.channels.SocketChannel;
 public class MultiTest {
 
     public static int length = 1024*1024*1;
-    public static int loaderNum = 4;
+    public static int loaderNum = 1;
 
     public static void main(String[] args) {
 

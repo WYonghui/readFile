@@ -38,8 +38,9 @@ public class Loader implements Runnable{
 //            socketChannel.connect(new InetSocketAddress("localhost", 8899));
 
             long count = MultiTest.length;
-            long position = 0 + threadNum*count;
-            long size = 0;
+//            long position = 0 + threadNum*count;
+            long position = 0 + 2 * count;
+//            long size = 0;
 
             while (true){
 
@@ -50,7 +51,7 @@ public class Loader implements Runnable{
                     break;
                 }
 
-                size += n;
+//                size += n;
                 position += count * MultiTest.loaderNum;
 
             }
