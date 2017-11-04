@@ -3,6 +3,7 @@ package MultiTransfertoTest;
 import java.io.File;
 import java.io.IOException;
 import java.net.InetSocketAddress;
+import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
 
 /**
@@ -27,39 +28,67 @@ public class MultiTest {
         long start = System.currentTimeMillis();
 
         //启动服务器线程
-//        Thread server = new Thread(new Server());
-//        server.start();
+//        Thread client = new Thread(new Client());
+//        client.start();
 
-        //连接服务器
-        SocketChannel socketChannel = null;
+        //启动服务器端接口并监听
         try {
-            socketChannel = SocketChannel.open();
-            socketChannel.connect(new InetSocketAddress("localhost", 8899));
+            ServerSocketChannel server = ServerSocketChannel.open();
+            server.socket().bind(new InetSocketAddress(8899));
 
-        } catch (IOException e){
-            e.printStackTrace();
-        }
-
-        Thread[] loaders = new Thread[loaderNum];
-        for (int i = 0; i < loaderNum; i++) {
-            loaders[i] = new Thread(new Loader(file, socketChannel));
-            loaders[i].start();
-        }
-
-        //等待传输结束
-        try {
+            //接收socket连接并启动文件传输
+            Thread[] loaders = new Thread[loaderNum];
+            SocketChannel[] socketChannels = new SocketChannel[loaderNum];
             for (int i = 0; i < loaderNum; i++) {
-                loaders[i].join();
+                socketChannels[i] = server.accept();
+
+//                (new Thread(new Receiver(socketChannel))).start();
+                loaders[i] = (new Thread(new Loader(file, socketChannels[i])));
+                loaders[i].start();
             }
 
-            socketChannel.close();
-//            server.join();
-        } catch (InterruptedException e){
-            e.printStackTrace();
+            //等待所有文件传输线程传输完成
+            for (int i = 0; i < loaderNum; i++) {
+                loaders[i].join();
+                socketChannels[i].close();
+            }
+
+            server.close();
         } catch (IOException e){
+            e.printStackTrace();
+        } catch (InterruptedException e){
             e.printStackTrace();
         }
 
+        //连接服务器
+//        SocketChannel socketChannel = null;
+//        try {
+//            socketChannel = SocketChannel.open();
+//            socketChannel.connect(new InetSocketAddress("localhost", 8899));
+//
+//        } catch (IOException e){
+//            e.printStackTrace();
+//        }
+//
+//        Thread[] loaders = new Thread[loaderNum];
+//        for (int i = 0; i < loaderNum; i++) {
+//            loaders[i] = new Thread(new Loader(file, socketChannel));
+//            loaders[i].start();
+//        }
+
+        //等待传输结束
+//        try {
+//            for (int i = 0; i < loaderNum; i++) {
+//                loaders[i].join();
+//            }
+//
+//            socketChannel.close();
+////            server.join();
+//        } catch (InterruptedException e){
+//            e.printStackTrace();
+//        } catch (IOException e){
+//            e.printStackTrace();
+//        }
 
         long end = System.currentTimeMillis();
 //        System.out.println("传输数据的时间为" + (end-start)/1000 + "s.");
