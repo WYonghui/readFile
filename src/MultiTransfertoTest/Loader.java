@@ -52,8 +52,8 @@ public class Loader implements Runnable{
                 }
 
 //                size += n;
-//                position += count * MultiTest.loaderNum;
-                position += count * 2;
+                position += count * MultiTest.loaderNum;
+//                position += count * 2;
 
             }
 
